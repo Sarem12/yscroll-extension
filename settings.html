@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YScroll Settings</title>
+  <link rel="stylesheet" href="settings.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <div class="logo-container">
+        <div class="logo">
+          <span class="logo-text">Y</span>
+        </div>
+        <div class="brand">
+          <h1>YScroll</h1>
+          <p>Get your work Done</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Daily Limit Section -->
+    <div class="section">
+      <h2 class="section-title">Daily Limit</h2>
+      <div class="limit-display">
+        <span class="limit-value" id="dailyLimitDisplay">30</span>
+        <span class="limit-unit">Minutes</span>
+      </div>
+      <div class="controls">
+        <button class="control-btn" id="dailyDecrement">−</button>
+        <span class="control-value" id="dailyValue">30</span>
+        <button class="control-btn" id="dailyIncrement">+</button>
+      </div>
+    </div>
+
+    <!-- Session Limit Section -->
+    <div class="section">
+      <h2 class="section-title">Session Limit<span class="optional">(Optional)</span></h2>
+      <div class="limit-display">
+        <span class="limit-value" id="sessionLimitDisplay">5</span>
+        <span class="limit-unit">Minutes</span>
+      </div>
+      <div class="controls">
+        <button class="control-btn" id="sessionDecrement">−</button>
+        <span class="control-value" id="sessionValue">5</span>
+        <button class="control-btn" id="sessionIncrement">+</button>
+      </div>
+    </div>
+
+    <!-- Finish Button -->
+    <button class="finish-btn" id="finishBtn">Finish</button>
+  </div>
+
+  <script src="settings.js"></script>
+</body>
+</html>
