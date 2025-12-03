@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YScroll</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <div class="logo-container">
+        <div class="logo">
+          <span class="logo-text">Y</span>
+        </div>
+        <div class="brand">
+          <h1>YScroll</h1>
+          <p>Get your work Done</p>
+        </div>
+      </div>
+      <button class="settings-btn" id="settingsBtn">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="3"></circle>
+          <path d="M12 1v6m0 6v6m0-18a9 9 0 1 0 0 18 9 9 0 0 0 0-18z"></path>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Progress Circle -->
+    <div class="progress-section">
+      <div class="progress-container">
+        <svg class="progress-ring" width="280" height="280">
+          <circle class="progress-ring-bg" cx="140" cy="140" r="120" />
+          <circle class="progress-ring-fill" cx="140" cy="140" r="120" id="progressCircle" />
+        </svg>
+        <div class="progress-text">
+          <div class="time-display">
+            <span class="time-used" id="timeUsed">0</span>
+            <span class="time-separator">/</span>
+            <span class="time-limit" id="timeLimit">30</span>
+          </div>
+          <div class="time-label">Minutes Watched</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Platforms Section -->
+    <div class="platforms-section">
+      <h2 class="platforms-title">Platforms</h2>
+      
+      <div class="platform-item">
+        <div class="platform-info">
+          <div class="platform-icon youtube">▶</div>
+          <span class="platform-name">YouTube Shorts</span>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="toggleYoutube" checked>
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+
+      <div class="platform-item">
+        <div class="platform-info">
+          <div class="platform-icon tiktok">♪</div>
+          <span class="platform-name">Tiktok</span>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="toggleTiktok" checked>
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+
+      <div class="platform-item">
+        <div class="platform-info">
+          <div class="platform-icon linkedin">in</div>
+          <span class="platform-name">Linkedin Feed</span>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="toggleLinkedin" checked>
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+
+      <div class="platform-item">
+        <div class="platform-info">
+          <div class="platform-icon instagram">📷</div>
+          <span class="platform-name">Instagram</span>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="toggleInstagram" checked>
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Master Toggle -->
+    <div class="master-toggle" id="masterToggle">
+      <div class="master-toggle-circle">
+        <span class="master-toggle-text">ON</span>
+        <span class="master-toggle-subtext">YScroll is Active</span>
+      </div>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
