@@ -1,0 +1,147 @@
+// LinkedIn Feed blocker
+(function() {
+  'use strict';
+  
+  let sessionStart = Date.now();
+  let isBlocked = false;
+  
+  // Check if we're on LinkedIn feed
+  function isFeedPage() {
+    return window.location.pathname === '/feed/' || window.location.pathname === '/';
+  }
+  
+  // Create blocking overlay
+  function createBlockOverlay(message) {
+    const overlay = document.createElement('div');
+    overlay.id = 'yscroll-block-overlay';
+    overlay.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.95);
+      z-index: 999999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    `;
+    
+    overlay.innerHTML = `
+      <div style="text-align: center; max-width: 500px; padding: 40px;">
+        <div style="width: 80px; height: 80px; background: white; border-radius: 20px; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center;">
+          <span style="font-size: 48px; font-weight: bold; color: #3b82f6;">Y</span>
+        </div>
+        <h1 style="font-size: 36px; margin-bottom: 16px;">Time's Up!</h1>
+        <p style="font-size: 18px; color: #cbd5e0; margin-bottom: 24px;">${message}</p>
+        <p style="font-size: 14px; color: #9ca3af;">Get back to work and be productive! 💪</p>
+      </div>
+    `;
+    
+    return overlay;
+  }
+  
+  // Check limits and block if necessary
+  async function checkAndBlock() {
+    const data = await chrome.storage.local.get(['isActive', 'platforms', 'dailyLimit', 'sessionLimit', 'usage']);
+    
+    // Check if extension is active
+    if (data.isActive === false) {
+      removeBlockOverlay();
+      return;
+    }
+    
+    // Check if LinkedIn is enabled
+    if (!data.platforms || data.platforms.linkedin === false) {
+      removeBlockOverlay();
+      return;
+    }
+    
+    // Only block on feed pages
+    if (!isFeedPage()) {
+      removeBlockOverlay();
+      return;
+    }
+    
+    const usage = data.usage || { today: 0 };
+    const dailyLimit = data.dailyLimit || 30;
+    const sessionLimit = data.sessionLimit || 5;
+    const sessionTime = (Date.now() - sessionStart) / 1000 / 60; // minutes
+    
+    // Check daily limit
+    if (usage.today >= dailyLimit) {
+      showBlockOverlay(`You've reached your daily limit of ${dailyLimit} minutes.`);
+      return;
+    }
+    
+    // Check session limit
+    if (sessionTime >= sessionLimit) {
+      showBlockOverlay(`You've reached your session limit of ${sessionLimit} minutes.`);
+      return;
+    }
+    
+    // Not blocked
+    removeBlockOverlay();
+  }
+  
+  // Show block overlay
+  function showBlockOverlay(message) {
+    if (isBlocked) return;
+    
+    const existing = document.getElementById('yscroll-block-overlay');
+    if (existing) existing.remove();
+    
+    const overlay = createBlockOverlay(message);
+    document.body.appendChild(overlay);
+    isBlocked = true;
+    
+    // Notify background script
+    chrome.runtime.sendMessage({ 
+      type: 'CONTENT_BLOCKED', 
+      platform: 'linkedin' 
+    });
+  }
+  
+  // Remove block overlay
+  function removeBlockOverlay() {
+    const overlay = document.getElementById('yscroll-block-overlay');
+    if (overlay) {
+      overlay.remove();
+      isBlocked = false;
+    }
+  }
+  
+  // Track time spent
+  function trackTime() {
+    if (isFeedPage() && !isBlocked) {
+      chrome.runtime.sendMessage({ 
+        type: 'TRACK_TIME', 
+        platform: 'linkedin',
+        url: window.location.href
+      });
+    }
+  }
+  
+  // Initialize
+  checkAndBlock();
+  
+  // Check every 2 seconds
+  setInterval(checkAndBlock, 2000);
+  
+  // Track time every 10 seconds
+  setInterval(trackTime, 10000);
+  
+  // Listen for URL changes
+  let lastUrl = location.href;
+  new MutationObserver(() => {
+    const url = location.href;
+    if (url !== lastUrl) {
+      lastUrl = url;
+      checkAndBlock();
+    }
+  }).observe(document, { subtree: true, childList: true });
+  
+})();
