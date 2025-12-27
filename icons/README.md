@@ -28,9 +28,10 @@ Use online icon generators like:
 - https://favicon.io/
 - https://realfavicongenerator.net/
 - https://www.canva.com/
+- https://icons8.com/
 
 ### Method 3: Design Software
-Use Figma, Sketch, Photoshop, or GIMP to create the icons manually.
+Use Figma, Sketch, Photoshop,Adobe Illustrator, or GIMP to create the icons manually.
 
 ## Temporary Workaround
 
